@@ -3,6 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:taskmanagerapi/presntation/screen/signup.dart';
 import 'package:taskmanagerapi/presntation/utilits/assets_path.dart';
 
+import '../../data/model/response_wrapper.dart';
+import '../../data/services/network_caller.dart';
+import '../../data/uitils/urls.dart';
 import '../widgets/backgroun_resuable.dart';
 import 'bottom_navbar.dart';
 import 'email_verifaction.dart';
@@ -44,6 +47,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           decoration: InputDecoration(
                             hintText: "Email",
                           ),
+                          validator: (String? value){
+                            if(value?.trim().isEmpty ?? true){
+                              return 'Enter your email';
+                            }else{
+                              return null;
+                            }
+                          },
                         ),
                         SizedBox(height: 8,),
                         TextFormField(
@@ -51,12 +61,42 @@ class _SignInScreenState extends State<SignInScreen> {
                           decoration: InputDecoration(
                             hintText: "Password",
                           ),
+                          validator: (String? value){
+                            if(value?.trim().isEmpty ?? true){
+                              return 'Enter your email';
+                            }else{
+                              return null;
+                            }
+                          },
                         ),
                         SizedBox(height: 16,),
                         SizedBox(
                           width: double.infinity,
-                          child: ElevatedButton(onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (_)=>BottomNavbar()));
+                          child: ElevatedButton(onPressed: () async {
+                            if(_formKey.currentState!.validate()){
+                              Map<String,dynamic>inputparam={
+                                "email":emailTextController.text,
+                                "password":passTextController.text,
+
+                              };
+
+                              final ResponseWrapper response=await  NetWorkCaller().postRequest(Urls.updateProfile,inputparam);
+                              if(response.isSuccess){
+                                if(mounted){
+                                  Navigator.push(context, MaterialPageRoute(builder: (_)=>BottomNavbar()));
+                                }
+                                //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Success full") ));
+                              }
+                              else{
+                                if(mounted){
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Not Success full") ));
+
+                                }
+
+
+                              }
+                            }
+
                           },
                     
                             child:Icon(Icons.arrow_circle_right_outlined),),

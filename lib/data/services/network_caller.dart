@@ -25,11 +25,6 @@ class NetWorkCaller{
 
     }
 
-
-
-
-
-
   }
 
   /// POst Method
@@ -54,12 +49,6 @@ class NetWorkCaller{
       return ResponseWrapper(isSuccess: false, statuscode:-1, responseBody:'',errorMessage: e.toString());
 
     }
-
-
-
-
-
-
   }
 
 
