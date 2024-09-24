@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanagerapi/data/services/network_caller.dart';
+import 'package:taskmanagerapi/data/uitils/urls.dart';
 import 'package:taskmanagerapi/presntation/utilits/app_color.dart';
 import 'package:taskmanagerapi/presntation/widgets/backgroun_resuable.dart';
+import 'package:taskmanagerapi/presntation/widgets/snackbarresuable.dart';
 
 import '../widgets/app_bar_resuable.dart';
 import '../widgets/task_card.dart';
 import '../widgets/task_counter.dart';
 
-class NewTask extends StatelessWidget {
+class NewTask extends StatefulWidget {
   const NewTask({super.key});
+
+  @override
+  State<NewTask> createState() => _NewTaskState();
+}
+
+class _NewTaskState extends State<NewTask> {
+  bool inTaskProgress=false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +62,25 @@ class NewTask extends StatelessWidget {
     );
   }
 
+  Future<void> getAllTaskByCount() async {
+    inTaskProgress=true;
+    setState(() {
+      
+    });
+   
+    final response=await NetWorkCaller().getRequest(Urls.statusNewTask);
+    if(response.isSuccess){
+
+    }else{
+      if(mounted){
+        showSnackBarMesage(context, response.errorMessage ?? 'Not Show in data');
+
+        
+      }
+    }
 
 
+  }
 }
 
 

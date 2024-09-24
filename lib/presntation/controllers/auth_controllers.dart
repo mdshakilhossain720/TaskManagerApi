@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController{
+  static String? accessToken;
   Future<void>saveUserData(UserData, userdata)async {
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
    await sharedPreferences.setString('userdata',jsonEncode(userdata.toJson()));
@@ -25,6 +26,7 @@ class AuthController{
   Future<void>saveToken(String token async {
     SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
     await sharedPreferences.getString('token',token);
+    accessToken=token;
   }
 
   Future<String?>getUserToken() async {
@@ -34,6 +36,7 @@ class AuthController{
   }
   Future<bool>isLoginIn() async {
     final resulat=await getUserToken();
+    accessToken=resulat;
     return resulat != null;
   }
   Future<void>clearUserData() async {

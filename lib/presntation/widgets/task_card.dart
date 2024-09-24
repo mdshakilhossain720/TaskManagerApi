@@ -12,7 +12,11 @@ class TaskCard extends StatelessWidget {
       child:Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("title Will be here"),
+          Text("title Will be here",style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+
+          ),),
           Text("Describtion Will be here"),
           Text("Date:12/09/2024"),
           Row(
@@ -21,6 +25,10 @@ class TaskCard extends StatelessWidget {
               Spacer(),
               IconButton(onPressed: (){}, icon:Icon(Icons.edit)),
               IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+
+
+
+
 
             ],
           )
